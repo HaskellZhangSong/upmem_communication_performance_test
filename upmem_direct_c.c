@@ -1,19 +1,20 @@
-#include "direct_interface.hpp"
+// #include "direct_interface.hpp"
+#include "upmem_interface.hpp"
 #include <iostream>
 
-#define cast_to_cpp(name) reinterpret_cast<DirectPIMInterface*>(name)
+#define cast_to_cpp(name) reinterpret_cast<UPMEMInterface*>(name)
 extern "C" {
   #include <upmem_direct_c.h>
   #include <stdint.h>
   XDirectPIMInterface* newDirectPIMInterface() {
-    return reinterpret_cast<XDirectPIMInterface*>(new DirectPIMInterface());
+    return reinterpret_cast<XDirectPIMInterface*>(new UPMEMInterface());
   }
   void deleteDirectPIMInterface(XDirectPIMInterface* self) {
     delete (cast_to_cpp(self));
   }
-  void SendToRank(XDirectPIMInterface* self, uint8_t **buffers, uint32_t symbol_offset, uint8_t *ptr_dest, uint32_t length, int id) {
-    cast_to_cpp(self)->SendToRank(buffers, symbol_offset, ptr_dest, length, id);
-  }
+//  void SendToRankMRAM(XDirectPIMInterface* self, uint8_t **buffers, uint32_t symbol_offset, uint8_t *ptr_dest, uint32_t length, int id) {
+//    cast_to_cpp(self)->SendToRankMRAM(buffers, symbol_offset, ptr_dest, length, id);
+//  }
   void allocate(XDirectPIMInterface* self, uint32_t nr_of_ranks, char* binary) {
     std::string binary2 = std::string(binary);
     cast_to_cpp(self)->allocate(nr_of_ranks, binary2);

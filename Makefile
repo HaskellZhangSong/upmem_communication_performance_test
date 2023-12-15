@@ -9,7 +9,10 @@ all: host dpu upmem_direct_c.o
 
 debug: CCFLAGS += -DXFER_BACK
 # debug: CCFLAGS += -g -DXFER_BACK
-debug: host dpu
+debug: host dpu dpu_checksum
+
+dpu_checksum:
+	$(CCDPU) dpu_checksum.c -o dpu_checksum
 
 host: host.cpp pim_interface
 	$(CC) -o host host.cpp $(INCLUDE_LIBS) $(INCLUDE_THIRD_PARTY) $(CCFLAGS)
